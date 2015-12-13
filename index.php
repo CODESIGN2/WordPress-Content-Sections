@@ -4,10 +4,12 @@ Plugin Name: CODESIGN2 Content Section Plugin
 Plugin URI: http://www.codesign2.co.uk
 Description: Bring your content authoring and tooling into the 21st century with this tool for all CODESIGN2 customers. NOT FOR RESALE BUNDLED OR STANDALONE FOR ANY REASON
 Author: CODESIGN2
-Version: 2.6
+Version: 2.6.2
 Author URI: http://www.codesign2.co.uk/
 License: AGPL
 */
+
+new cd2_content_sectionCPTClass();
 
 /** 
  * The Class.
@@ -28,7 +30,7 @@ class cd2_content_sectionCPTClass {
     }
     
     public function ajax_content_section() {
-        $name = isset( $_GET['name'] ) ? base64_decode( $_GET['name'] ) : 'invalid';
+        $name = isset( $_GET['name'] ) ? urldecode( $_GET['name'] ) : 'invalid';
         die(
             json_encode( 
                 [ 
@@ -56,7 +58,7 @@ class cd2_content_sectionCPTClass {
                     'ID' => get_the_ID(),
                     'title' => get_the_title(),
                     'author' => get_the_author(),
-                    'content' => get_the_content(),
+                    'content' => apply_filters( 'the_content', get_the_content() ),
                     'thumbnail' => wp_get_attachment_url( get_post_thumbnail_id( get_the_ID() ) ),
                 ];
             }
@@ -86,7 +88,7 @@ class cd2_content_sectionCPTClass {
             $atts
         ); // Ensure that attributes exist
         $slug = sanitize_title( $atts_named[ 'name' ] );
-        $out = '<!-- CD2 content section shortcode used here for "' . $atts_named[ 'name' ] . '" translated to "' . $slug . '" -->';
+        $out = '';//<!-- CD2 content section shortcode used here for "' . $atts_named[ 'name' ] . '" translated to "' . $slug . '" -->';
         $args = [
             'post_type' => self::POST_TYPE,
             'name' => $slug
@@ -97,7 +99,7 @@ class cd2_content_sectionCPTClass {
         if ( $the_query->have_posts() ) {
             while ( $the_query->have_posts() ) {
                 $the_query->the_post();
-                $out .= do_shortcode( get_the_content() );
+                $out .= do_shortcode( apply_filters( 'the_content', get_the_content() ) );
             }
         }
         wp_reset_query();
@@ -161,4 +163,3 @@ class cd2_content_sectionCPTClass {
         );
     }
 }
-new cd2_content_sectionCPTClass();
