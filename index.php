@@ -2,7 +2,7 @@
 /*
 Plugin Name: CODESIGN2 Content Section Plugin
 Plugin URI: http://www.codesign2.co.uk
-Description: Bring your content authoring and tooling into the 21st century with this tool for all CODESIGN2 customers. NOT FOR RESALE BUNDLED OR STANDALONE FOR ANY REASON
+Description: Bring your content authoring and tooling into the 21st century with this tool.
 Author: CODESIGN2
 Version: 2.6.2
 Author URI: http://www.codesign2.co.uk/
@@ -88,7 +88,7 @@ class cd2_content_sectionCPTClass {
             $atts
         ); // Ensure that attributes exist
         $slug = sanitize_title( $atts_named[ 'name' ] );
-        $out = '';//<!-- CD2 content section shortcode used here for "' . $atts_named[ 'name' ] . '" translated to "' . $slug . '" -->';
+        $out = '';
         $args = [
             'post_type' => self::POST_TYPE,
             'name' => $slug
