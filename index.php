@@ -4,7 +4,7 @@ Plugin Name: CODESIGN2 Content Section Plugin
 Plugin URI: http://www.codesign2.co.uk
 Description: Bring your content authoring and tooling into the 21st century with this tool.
 Author: CODESIGN2
-Version: 2.6.2
+Version: 2.6.4
 Author URI: http://www.codesign2.co.uk/
 License: AGPL
 */
@@ -103,6 +103,7 @@ class cd2_content_sectionCPTClass {
             }
         }
         wp_reset_query();
+	wp_reset_postdata();
         return $out;
     }
 
